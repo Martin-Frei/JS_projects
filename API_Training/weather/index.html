@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wether API</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Weather API</h1>
+    <div>
+      <div class="input">
+        <input
+          type="text"
+          id="cityInput"
+          name="city"
+          placeholder="Wich city??"
+        />
+        <button onclick="getInputValue()">send</button>
+      </div>
+      <table class="showWeather">
+        <tbody>
+          <tr>
+            <td>City:</td>
+            <td id="city"></td>
+          </tr>
+          <tr>
+            <td>Temp:</td>
+            <td id="temp"></td>
+          </tr>
+          <tr>
+            <td>Windspeed:</td>
+            <td id="windSpeed"></td>
+          </tr>
+          <tr>
+            <td>Winddirection:</td>
+            <td id="windDeg"></td>
+          </tr>
+          <tr>
+            <td>Weather Description:</td>
+            <td id="weatherDescription"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <script src="api-weather-key.js"></script>
+  <script src="script.js"></script>
+</html>

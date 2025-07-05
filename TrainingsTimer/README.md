@@ -62,7 +62,7 @@ Die App funktioniert komplett **offline im Browser** und benötigt keine Install
 Dieses Projekt richtet sich an:
 - sportaffine Nutzer mit Bedarf an klarer Zeitstruktur
 - Personen, die beim Training nicht ständig auf die Uhr schauen wollen
-- Entwickler:innen, die ein Beispiel für einfache Audio- und Timer-Steuerung mit Vanilla JS suchen
+- Entwickler, die ein Beispiel für einfache Audio- und Timer-Steuerung mit Vanilla JS suchen
 
 ---
 

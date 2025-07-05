@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Timer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🏋️ Training Timer</h1>
+        
+        <div class="file-input">
+            <label for="musicFile">MP3-Datei auswählen:</label><br>
+            <input type="file" id="musicFile" accept=".mp3,.wav,.m4a,.ogg" />
+        </div>
+        
+        <div class="status" id="status">Bereit zum Start</div>
+        <div class="timer" id="timer">00:00</div>
+        <div class="progress" id="progress">Wähle eine Musikdatei aus</div>
+        <div class="volume-info" id="volumeInfo">Lautstärke: Normal</div>
+        
+        <div class="controls">
+            <button id="startBtn" onclick="startTraining()">Start Training</button>
+            <button id="pauseBtn" onclick="pauseTraining()" disabled>Pause</button>
+            <button id="stopBtn" onclick="stopTraining()" disabled>Stop</button>
+        </div>
+        
+        <audio id="audioPlayer" loop></audio>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
