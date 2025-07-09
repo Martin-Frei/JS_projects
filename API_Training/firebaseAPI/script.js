@@ -1,43 +1,126 @@
-function onloadFunc(){
-    console.log("test");
-    loadData();
-}
-
-async function loadData() {
-            // Du deklarierst eine asynchrone Funktion, weil du innerhalb await benutzen willst.
-            // Das bedeutet: Die Funktion gibt implizit ein Promise zurück und kann nicht blockierend arbeiten.
-
+// Asynchrone Funktion zum Laden von Daten aus der Firebase Realtime Database
+async function loadData(path = "") {
     try {
-            // Ein try-Block fängt Fehler innerhalb des Blocks ab, damit du sie im catch behandeln kannst.
-            // Saubere Fehlerbehandlung bei asynchronem Code ist Pflicht, vor allem bei API-Zugriffen!
-
-        let response = await fetch(BASE_URL + ".json");
-            // Du machst einen HTTP-Request mit fetch an eine Firebase-URL (z. B. https://...firebaseio.com/.json).
-            // await bedeutet: JavaScript wartet auf die Antwort, bevor es weitergeht.
-            // response ist ein Response-Objekt, kein JSON!
+        let response = await fetch(BASE_URL + path + ".json");
         
         if (!response.ok) {
             throw new Error("Fehler beim Abrufen: " + response.status);
-            // Du prüfst, ob der Server eine erfolgreiche Antwort gesendet hat (ok === true bei Status 200–299).
-            // Wenn nicht, wirfst du manuell einen Fehler mit throw new Error(...).
-            // Damit springt der Code direkt in den catch-Block.
         }
 
         let data = await response.json();
-            // Jetzt parst du den Body der Antwort von Text in echtes JavaScript-Objekt (JSON → JS-Objekt).
-            // Auch das ist asynchron, daher wieder await.
-
         console.log("Geladene Daten:", data);
-            // Du gibst die geparsten Daten aus
-            // Gut zum Debuggen oder Weiterverarbeiten
-
+        return data;
+        
     } catch (err) {
-            // Wenn irgendwo im try-Block ein Fehler passiert (z. B. kein Internet, falsche URL, JSON kaputt), wird dieser Block ausgeführt.
         console.error("Fehler beim Laden:", err);
-            // Fehlerausgabe im Browser-Console-Log.
-            // Damit du weißt, was schiefgelaufen ist, z. B.:
-            // TypeError: Failed to fetch
-            // SyntaxError: Unexpected token <
-            // Fehler beim Abrufen: 404
+        return null;
+    }
+}
+
+// Asynchrone Funktion zum Schreiben von Daten in die Firebase Realtime Database
+async function postData(path = "", data = {}) {
+    try {
+        let response = await fetch(BASE_URL + path + ".json", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        let result = await response.json();
+        return result;
+    } catch (err) {
+        console.error("Fehler beim Speichern:", err);
+        return null;
+    }
+}
+
+// Asynchrone Funktion zum Löschen von Daten aus der Firebase-Datenbank
+async function deleteData(path = "") {
+    try {
+        let response = await fetch(BASE_URL + path + ".json", {
+            method: "DELETE"
+        });
+
+        let result = await response.json();
+        return result;
+    } catch (err) {
+        console.error("Fehler beim Löschen:", err);
+        return null;
+    }
+}
+
+// NEUE FUNKTION: Löscht eine Notiz und aktualisiert die Anzeige
+async function deleteNote(path) {
+    try {
+        // Löschen der Notiz
+        await deleteData(path);
+        
+        // Daten neu laden und anzeigen
+        const data = await loadData("notes");
+        renderData(data);
+        
+        console.log("Notiz erfolgreich gelöscht:", path);
+    } catch (err) {
+        console.error("Fehler beim Löschen der Notiz:", err);
+        alert("Fehler beim Löschen der Notiz!");
+    }
+}
+
+// Funktion zum Verarbeiten des Speichern-Buttons
+async function handleSubmit() {
+    const title = document.getElementById("noteTitle").value;
+    const text = document.getElementById("noteText").value;
+
+    // Einfache Validierung
+    if (!title || !text) {
+        alert("Bitte Titel und Text eingeben!");
+        return;
+    }
+
+    // Objekt erstellen und an Firebase senden
+    await postData("notes", { title, text });
+
+    // Eingabefelder leeren
+    document.getElementById("noteTitle").value = "";
+    document.getElementById("noteText").value = "";
+
+    // Daten neu laden und anzeigen
+    const data = await loadData("notes");
+    renderData(data);
+}
+
+// Wird automatisch aufgerufen, sobald die Seite geladen wird
+async function onloadFunc() {
+    const data = await loadData("notes");
+    renderData(data);
+}
+
+// Funktion zum Anzeigen der geladenen Daten im Browser
+function renderData(data) {
+    const output = document.getElementById("output");
+    output.innerHTML = "";
+
+    if (!data) {
+        output.innerHTML = "<p>Keine Notizen vorhanden</p>";
+        return;
+    }
+
+    // Durch alle Notizen im JSON-Datenobjekt gehen
+    for (let id in data) {
+        const note = data[id];
+
+        const div = document.createElement("div");
+        div.className = "note";
+
+        // Den Inhalt der Notiz als HTML einfügen
+        div.innerHTML = `
+            <span><strong>${note.title}</strong></span>: 
+            <span>${note.text}</span>
+            <button class="btn" onclick="deleteNote('notes/${id}')">🗑️</button>
+        `;
+
+        output.appendChild(div);
     }
 }

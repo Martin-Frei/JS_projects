@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +9,15 @@
 </head>
 <body onload="onloadFunc()">
 
-    <h1>Firebase Daten</h1>
+    <h1>Firebase Daten Meine Notizen</h1>
+
+    <input id="noteTitle" placeholder="Titel eingeben" />
+    <input id="noteText" placeholder="Text eingeben" />
+    <button onclick="handleSubmit()">Speichern</button>
+    
     <div id="output"></div>
     
+    <script src="apiKey.js"></script>
+    <script src="script.js"></script>
 </body>
-<script src="apiKey.js"></script>
-<script src="script.js"></script>
 </html>
