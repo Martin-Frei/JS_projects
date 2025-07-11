@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #666;
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.temperature-display {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #ff6b6b, #feca57);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #5a67d8;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+input[type="number"] {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    flex: 1;
+    max-width: 200px;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.output {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-family: monospace;
+    border-left: 4px solid #667eea;
+    line-height: 1.6;
+}
+
+.history {
+    background: #e9ecef;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.history strong {
+    color: #333;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.history-item {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+    color: #666;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .input-group {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    input[type="number"] {
+        max-width: 100%;
+    }
+    
+    .temperature-display {
+        font-size: 20px;
+    }
+}

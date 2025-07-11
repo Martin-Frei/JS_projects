@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getter & Setter - Mittel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Getter & Setter - Mittleres Beispiel</h1>
+        <h2>Temperatursensor mit Validierung und History</h2>
+        
+        <div class="temperature-display" id="tempDisplay">
+            🌡️ Aktuelle Temperatur: Nicht gesetzt
+        </div>
+        
+        <div class="controls">
+            <button onclick="setRandomTemp()">Zufällige Temperatur</button>
+            <button onclick="showStats()">Statistiken anzeigen</button>
+            <button onclick="clearHistory()">History löschen</button>
+        </div>
+        
+        <div class="input-group">
+            <input type="number" id="tempInput" placeholder="Temperatur in °C" min="-50" max="50">
+            <button onclick="setManualTemp()">Temperatur setzen</button>
+        </div>
+        
+        <div class="output" id="output">
+            Setze eine Temperatur um zu beginnen!
+        </div>
+        
+        <div class="history" id="history">
+            <strong>Temperatur History:</strong>
+            <div id="historyList">Keine Einträge vorhanden</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
