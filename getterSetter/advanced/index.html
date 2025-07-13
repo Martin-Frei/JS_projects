@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getter & Setter - Fortgeschritten</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Getter & Setter Advanced</h1>
+        <p class="subtitle">Proxy-basiertes Benutzer-Management mit Observern, Validierung und Metaprogrammierung</p>
+        
+        <div class="dashboard">
+            <div class="card">
+                <h3><span class="icon">👤</span>Benutzer Information</h3>
+                <div class="user-info" id="userInfo">
+                    <div class="info-item">
+                        <span>Status:</span>
+                        <span>Nicht geladen</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" id="nameInput" placeholder="Neuer Name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="emailInput" placeholder="neue@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Alter:</label>
+                    <input type="number" id="ageInput" min="0" max="120" placeholder="Alter">
+                </div>
+                
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select id="statusSelect">
+                        <option value="active">Aktiv</option>
+                        <option value="inactive">Inaktiv</option>
+                        <option value="pending">Ausstehend</option>
+                        <option value="banned">Gesperrt</option>
+                    </select>
+                </div>
+                
+                <div class="controls">
+                    <button onclick="updateUser()">Benutzer aktualisieren</button>
+                    <button onclick="createRandomUser()">Zufälliger Benutzer</button>
+                    <button onclick="showUserHistory()">History anzeigen</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🔍</span>Live Monitoring</h3>
+                <div id="liveStats">
+                    <div class="info-item">
+                        <span>Aktive Observer:</span>
+                        <span id="observerCount">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span>Änderungen:</span>
+                        <span id="changeCount">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span>Letzte Änderung:</span>
+                        <span id="lastChange">Keine</span>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button onclick="addObserver()">Observer hinzufügen</button>
+                    <button onclick="removeObserver()">Observer entfernen</button>
+                    <button onclick="showProxyLogs()">Proxy Logs</button>
+                    <button onclick="resetSystem()">System zurücksetzen</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="proxy-demo">
+            <h4>🎯 Proxy-Methoden Demo</h4>
+            <div class="controls">
+                <button onclick="testDynamicProperties()">Dynamische Eigenschaften</button>
+                <button onclick="testComputedProperties()">Berechnete Eigenschaften</button>
+                <button onclick="testValidation()">Validierung testen</button>
+                <button onclick="testSerialization()">Serialisierung</button>
+            </div>
+            <div class="method-logs" id="methodLogs">
+                Proxy-Methoden werden hier geloggt...
+            </div>
+        </div>
+        
+        <div class="output" id="output">
+            Willkommen zum fortgeschrittenen Getter & Setter Beispiel!<br>
+            Dieses System nutzt JavaScript Proxy für erweiterte Funktionalität.
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

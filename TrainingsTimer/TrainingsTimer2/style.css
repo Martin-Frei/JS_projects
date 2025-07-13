@@ -1,0 +1,199 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 90%;
+}
+
+/* Einstellungen */
+.settings {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.settings h3 {
+    margin-top: 0;
+    text-align: center;
+    color: #FFD700;
+}
+
+.setting-group {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setting-group label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.setting-group input {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 1em;
+    width: 80px;
+    text-align: center;
+}
+
+.setting-group input:focus {
+    outline: none;
+    border-color: #FFD700;
+}
+
+/* Status und Timer */
+.status {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.training {
+    color: #4CAF50;
+    animation: pulse 1s infinite;
+}
+
+.pause {
+    color: #FF9800;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.timer {
+    font-size: 4em;
+    font-weight: bold;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.progress {
+    font-size: 1.2em;
+    margin: 20px 0;
+    opacity: 0.8;
+}
+
+.volume-info {
+    margin: 10px 0;
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+/* Buttons */
+.controls {
+    margin: 20px 0;
+}
+
+button {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 15px 30px;
+    margin: 10px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.toggle-settings {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggle-settings:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* File Input */
+.file-input {
+    margin: 20px 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+input[type="file"] {
+    color: white;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+        width: 95%;
+    }
+    
+    .status {
+        font-size: 2.5em;
+    }
+    
+    .timer {
+        font-size: 3em;
+    }
+    
+    .setting-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .setting-group label {
+        margin-bottom: 5px;
+    }
+    
+    .setting-group input {
+        width: 100%;
+    }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🏋️ Training Timer</h1>
+        
+        <button class="toggle-settings" onclick="toggleSettings()">⚙️ Einstellungen</button>
+        
+        <div class="settings hidden" id="settings">
+            <h3>⚙️ Timer Einstellungen</h3>
+            
+            <div class="setting-group">
+                <label>Countdown Start (Sekunden):</label>
+                <input type="number" id="countdownTime" value="10" min="1" max="60">
+            </div>
+            
+            <div class="setting-group">
+                <label>Anzahl Blöcke:</label>
+                <input type="number" id="totalSets" value="3" min="1" max="10">
+            </div>
+            
+            <div class="setting-group">
+                <label>Runden pro Block:</label>
+                <input type="number" id="roundsPerSet" value="3" min="1" max="10">
+            </div>
+            
+            <div class="setting-group">
+                <label>Trainingszeit (Sekunden):</label>
+                <input type="number" id="trainingTime" value="45" min="10" max="300">
+            </div>
+            
+            <div class="setting-group">
+                <label>Kurze Pause (Sekunden):</label>
+                <input type="number" id="shortBreakTime" value="15" min="5" max="120">
+            </div>
+            
+            <div class="setting-group">
+                <label>Lange Pause (Sekunden):</label>
+                <input type="number" id="longBreakTime" value="60" min="10" max="300">
+            </div>
+        </div>
+        
+        <div class="file-input">
+            <label for="musicFile">MP3-Datei auswählen:</label><br>
+            <input type="file" id="musicFile" accept=".mp3,.wav,.m4a,.ogg" />
+        </div>
+        
+        <div class="status" id="status">Bereit zum Start</div>
+        <div class="timer" id="timer">00:00</div>
+        <div class="progress" id="progress">Wähle eine Musikdatei aus</div>
+        <div class="volume-info" id="volumeInfo">Lautstärke: Normal</div>
+        
+        <div class="controls">
+            <button id="startBtn" onclick="startTraining()">Start Training</button>
+            <button id="pauseBtn" onclick="pauseTraining()" disabled>Pause</button>
+            <button id="stopBtn" onclick="stopTraining()" disabled>Stop</button>
+        </div>
+        
+        <audio id="audioPlayer" loop></audio>
+    </div>
+
+    <script src="settings.js"></script>
+    <script src="timer.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

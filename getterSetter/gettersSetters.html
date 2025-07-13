@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+        // class
+
+        //get = read value
+        //set = a value update oder changing
+
+        // without get and set
+
+        //with get and set
+        class User {
+          // #age  the same as _age
+          constructor(name, age) {
+            this.name = name;
+            this._age = age;
+          }
+          //look like methods but they are properties
+          get age() {
+            return this._age;
+          }
+          set age(value) {
+            if (value > 0 && value < 100) {
+              this._age = value;
+            } else {
+              console.log("Age betwenn 1 and 99 Years");
+            }
+          }
+        }
+
+        let user2 = new User("Martin", 20);
+        console.log(user2.name);
+        user2.age = -10;
+        console.log(user2.age);
+
+        //polymorphisim
+        // overriding Parent Child inheritance
+
+        class Animal{
+          makeSound(){
+              consol.log("Animal makes a sound")
+          }
+        }
+        class Dog extends Animal{
+          makeSound(){
+              consol.log("barking")
+          }
+        }
+        class Cat extends Animal{
+          makeSound(){
+              consol.log("Miau")
+          }
+        }
+      let a = new Animal();
+      let b = new Dog()
+      let c = new Cat()
+
+
+    a.makeSound()
+    b.makeSound()
+    c.makeSound()
+
+    let animal1 = [new Dog(), new Cat(), new Animal()]
+
+    animal.forEach(a => {
+        a.makeSound()
+    })
+
+    // also with super(){}
+
+
+
+
+
+
+    </script>
+  </body>
+</html>
