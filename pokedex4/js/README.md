@@ -13,6 +13,7 @@ Die Anwendung ist in mehrere JS-Dateien unterteilt:
 | `main.js`     | Initialisierung beim Start |
 | `scroll.js`   | Unendliches Scrollen |
 | `search.js`   | Suchfunktion mit Vorschlägen |
+| `template.js` | Rendert das Frontend |
 | `ui.js`       | Darstellung der Pokémon als Karten & Detailansicht |
 
 ## ▶️ Verwendung
