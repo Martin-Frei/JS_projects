@@ -16,6 +16,21 @@ function filterPokemon(query, limit = 10) {
 }
 
 
+function createSearchResultElement(result) {
+    const resultElement = document.createElement('div');
+    resultElement.className = 'search-result-item';
+    resultElement.innerHTML = createSearchResultTemplate(result);
+    
+    resultElement.addEventListener('click', () => {
+        bigModel(result.id);
+        searchInput.value = '';
+        searchResults.classList.remove('show');
+    });
+    
+    return resultElement;
+}
+
+
 function renderSearchResults(results) {
     if (results.length === 0) {
         searchResults.innerHTML = '<div class="search-no-results">No Pokémon found</div>';
@@ -25,16 +40,7 @@ function renderSearchResults(results) {
     searchResults.innerHTML = '';
     
     for (let result of results) {
-        const resultElement = document.createElement('div');
-        resultElement.className = 'search-result-item';
-        resultElement.innerHTML = createSearchResultTemplate(result);
-        
-        resultElement.addEventListener('click', () => {
-            bigModel(result.id);
-            searchInput.value = '';
-            searchResults.classList.remove('show');
-        });
-        
+        const resultElement = createSearchResultElement(result);
         searchResults.appendChild(resultElement);
     }
 }

@@ -30,27 +30,40 @@ function smallCardTemplate(pokemon) {
 }
 
 
+async function loadPokemonData(id) {
+    const pokemon = pokemonCache.get(id) || await fetchPokemon(id);
+    
+    if (!pokemon) {
+        console.error('Pokémon not found');
+        throw new Error('Pokémon not found');
+    }
+    
+    return pokemon;
+}
+
+
+function renderBigModel(pokemon, id) {
+    model.innerHTML = createBigModelTemplate(pokemon);
+    setupNavigationEventListeners(id);
+    setupTabEventListeners();
+    setupCloseButtonEventListener();
+}
+
+n
 async function bigModel(id) {
     showLoadingSpinner();
     
     try {
-        const pokemon = pokemonCache.get(id) || await fetchPokemon(id);
-        
-        if (!pokemon) {
-            console.error('Pokémon not found');
-            showAndHide(true);
-            return;
-        }
-       
-        model.innerHTML = createBigModelTemplate(pokemon);
-        setupNavigationEventListeners(id);
-        setupTabEventListeners();
-        setupCloseButtonEventListener();
+        const pokemon = await loadPokemonData(id);
+        renderBigModel(pokemon, id);
         
     } catch (error) {
         console.error("Fehler beim Laden des Pokémon:", error);
         showAndHide(true);
+        hideLoadingSpinner();
+        return;
     }
+    
     hideLoadingSpinner();
     showAndHide(false);
 }

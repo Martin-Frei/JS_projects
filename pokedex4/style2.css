@@ -204,30 +204,19 @@ body {
     height: 250px;
     padding: 16px;
     border-radius: 10px;
-    /* Keine transition hier - Container bleibt unverändert */
+    transition: all 0.3s ease; /* GEÄNDERT: von 'transform' auf 'all' für komplette Hover-Effekte */
 }
 
-.pokemon-card{
-    border-radius: 10px;
+.smallImg:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.1); /* HINZUGEFÜGT: Hintergrundfarbe beim Hover */
+    border-color: #ff4757; /* HINZUGEFÜGT: Border-Farbe beim Hover */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* HINZUGEFÜGT: Schatten beim Hover */
 }
 
 .smallImg img {
     width: 75px;
     height: 75px;
-    transition: transform 0.3s ease; /* HINZUGEFÜGT: nur das Bild animieren */
-}
-
-.smallImg:hover img {
-    transform: scale(1.4); /* HINZUGEFÜGT: nur das Bild wird größer */
-}
-
-/* Falls es Text in den smallCards gibt, auch den animieren */
-.smallImg *:not(img) {
-    transition: transform 0.3s ease; /* HINZUGEFÜGT: Text und andere Inhalte animieren */
-}
-
-.smallImg:hover *:not(img) {
-    transform: scale(1.05); /* HINZUGEFÜGT: Text und andere Inhalte werden größer */
 }
 
 #bigCard {
@@ -608,7 +597,7 @@ body {
     50% { opacity: 0.6; }
 }
 
-/* Responsive Design - ERWEITERT */
+/* Responsive Design */
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
@@ -628,9 +617,9 @@ body {
     .modelContent {
         width: 90%;
         left: 5%;
-        height: 80vh; /* Reduzierte Höhe für mehr Abstand */
-        max-height: 80vh;
-        top: 15%; /* Mehr Abstand vom Header */
+        height: 85vh;
+        max-height: 85vh; /* GEÄNDERT: von 'top: 7.5%' auf 'max-height' für bessere Scrollbarkeit */
+        top: 5%; /* GEÄNDERT: von 7.5% auf 5% für mehr Platz */
     }
 
     body {
@@ -650,73 +639,5 @@ body {
     .pokeball::before {
         width: 6px;
         height: 6px;
-    }
-
-    /* FIX FÜR NAVIGATION BUTTONS */
-    .pokemon-header {
-        flex-wrap: nowrap; /* Verhindert das Umbrechen der Buttons */
-        gap: 10px; /* Kleinerer Abstand zwischen Elementen */
-    }
-
-    .pokemon-header h2 {
-        font-size: 18px; /* Kleinere Schrift für mehr Platz */
-        margin: 0 5px; /* Kleinere Margins */
-    }
-
-    .nav-btn {
-        padding: 8px 12px; /* Kleinere Buttons */
-        font-size: 12px; /* Kleinere Schrift */
-        min-width: 60px; /* Kleinere Mindestbreite */
-    }
-
-    .prev-btn {
-        margin-right: 5px; /* Kleinerer Margin */
-    }
-
-    .next-btn {
-        margin: 5px; /* Kleinerer Margin */
-    }
-}
-
-/* ZUSÄTZLICHER BREAKPOINT FÜR SEHR KLEINE BILDSCHIRME */
-@media (max-width: 480px) {
-    .modelContent {
-        width: 95%;
-        left: 2.5%;
-        height: 75vh; /* Noch kleinere Höhe */
-        max-height: 75vh;
-        top: 20%; /* Noch mehr Abstand vom Header */
-    }
-
-    .pokemon-header {
-        flex-direction: column; /* Stapelt die Elemente vertikal */
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 15px; /* Mehr Abstand nach unten */
-    }
-
-    .pokemon-header h2 {
-        order: 1; /* Titel kommt zuerst */
-        margin-bottom: 10px;
-    }
-
-    .nav-btn {
-        order: 2; /* Buttons kommen danach */
-        padding: 10px 15px;
-        font-size: 14px;
-        min-width: 80px;
-    }
-
-    /* Container für die Buttons */
-    .pokemon-header::after {
-        content: '';
-        display: flex;
-        gap: 15px;
-        order: 3;
-    }
-
-    .prev-btn,
-    .next-btn {
-        margin: 0; /* Entfernt die individuellen Margins */
     }
 }
