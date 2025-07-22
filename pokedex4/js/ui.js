@@ -1,4 +1,112 @@
 
+const POKEMON_MIN_ID = 1;
+const POKEMON_MAX_ID = 1025;
+
+
+function getPrevButton() {
+    return document.getElementById('prevBtn');
+}
+
+
+function getNextButton() {
+    return document.getElementById('nextBtn');
+}
+
+
+function disablePrevButton() {
+    const prevBtn = getPrevButton();
+    if (prevBtn) {
+        prevBtn.disabled = true;
+        prevBtn.classList.add('btn-disabled');
+    }
+}
+
+
+function enablePrevButton() {
+    const prevBtn = getPrevButton();
+    if (prevBtn) {
+        prevBtn.disabled = false;
+        prevBtn.classList.remove('btn-disabled');
+    }
+}
+
+
+function shouldDisablePrevButton(currentId) {
+    return currentId <= POKEMON_MIN_ID;
+}
+
+
+function updatePrevButtonState(currentId) {
+    if (shouldDisablePrevButton(currentId)) {
+        disablePrevButton();
+    } else {
+        enablePrevButton();
+    }
+}
+
+
+function disableNextButton() {
+    const nextBtn = getNextButton();
+    if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.classList.add('btn-disabled');
+    }
+}
+
+
+function enableNextButton() {
+    const nextBtn = getNextButton();
+    if (nextBtn) {
+        nextBtn.disabled = false;
+        nextBtn.classList.remove('btn-disabled');
+    }
+}
+
+
+function shouldDisableNextButton(currentId) {
+    return currentId >= POKEMON_MAX_ID;
+}
+
+
+function updateNextButtonState(currentId) {
+    if (shouldDisableNextButton(currentId)) {
+        disableNextButton();
+    } else {
+        enableNextButton();
+    }
+}
+
+
+function setupPrevButtonListener(currentId) {
+    const prevBtn = getPrevButton();
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentId > POKEMON_MIN_ID) {
+                bigModel(currentId - 1);
+            }
+        });
+    }
+}
+
+
+function setupNextButtonListener(currentId) {
+    const nextBtn = getNextButton();
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentId < POKEMON_MAX_ID) {
+                bigModel(currentId + 1);
+            }
+        });
+    }
+}
+
+
+function updateNavigationButtons(currentId) {
+    updatePrevButtonState(currentId);
+    updateNextButtonState(currentId);
+}
+
+
 function showLoadingSpinner() {
     if (!document.getElementById('loadingSpinner')) {
         const spinner = document.createElement('div');
@@ -49,7 +157,7 @@ function renderBigModel(pokemon, id) {
     setupCloseButtonEventListener();
 }
 
-n
+
 async function bigModel(id) {
     showLoadingSpinner();
     
@@ -70,24 +178,11 @@ async function bigModel(id) {
 
 
 function setupNavigationEventListeners(currentId) {
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (currentId > 1) {
-                bigModel(currentId - 1);
-            }
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (currentId < 1010) {
-                bigModel(currentId + 1);
-            }
-        });
-    }
+   
+    updateNavigationButtons(currentId);
+ 
+    setupPrevButtonListener(currentId);
+    setupNextButtonListener(currentId);
 }
 
 

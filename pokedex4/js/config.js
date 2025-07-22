@@ -4,7 +4,7 @@ let cardInBox = document.getElementById("bigCard");
 let searchInput = document.getElementById("searchInput");
 let searchResults = document.getElementById("searchResults");
 let offset = 1;
-let limit = 30;
+let limit = 45;
 let loading = false;
 let searchTimeout;
 

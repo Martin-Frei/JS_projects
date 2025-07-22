@@ -1,3 +1,8 @@
+:root {
+    --header-height: 120px;
+    --modal-offset: 20px;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -7,10 +12,9 @@
 body {
     background-color: aquamarine;
     font-family: 'Arial', sans-serif;
-    padding-top: 120px; /* Platz für den fixed Header */
+    padding-top: var(--header-height);
 }
 
-/* Fixed Header Styles */
 .header {
     position: fixed;
     top: 0;
@@ -23,7 +27,7 @@ body {
 }
 
 .header-content {
-    max-width: 1440px; /* GEÄNDERT: von 1200px auf 1440px */
+    max-width: 1440px; 
     margin: 0 auto;
     padding: 15px 20px;
     display: flex;
@@ -84,7 +88,6 @@ body {
     to { transform: rotate(360deg); }
 }
 
-/* Search Container */
 .search-container {
     position: relative;
     flex: 1;
@@ -190,12 +193,13 @@ body {
     font-style: italic;
 }
 
-/* Main Content */
 .main-content {
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 1440px;
+    margin: auto;
 }
 
 .smallImg {
@@ -204,30 +208,29 @@ body {
     height: 250px;
     padding: 16px;
     border-radius: 10px;
-    /* Keine transition hier - Container bleibt unverändert */
 }
 
 .pokemon-card{
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .smallImg img {
     width: 75px;
     height: 75px;
-    transition: transform 0.3s ease; /* HINZUGEFÜGT: nur das Bild animieren */
+    transition: transform 0.3s ease;
 }
 
 .smallImg:hover img {
-    transform: scale(1.4); /* HINZUGEFÜGT: nur das Bild wird größer */
+    transform: scale(1.4); 
 }
 
-/* Falls es Text in den smallCards gibt, auch den animieren */
 .smallImg *:not(img) {
-    transition: transform 0.3s ease; /* HINZUGEFÜGT: Text und andere Inhalte animieren */
+    transition: transform 0.3s ease; 
 }
 
 .smallImg:hover *:not(img) {
-    transform: scale(1.05); /* HINZUGEFÜGT: Text und andere Inhalte werden größer */
+    transform: scale(1.05); 
 }
 
 #bigCard {
@@ -236,24 +239,26 @@ body {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    max-width: 1440px; /* HINZUGEFÜGT: maxWidth-Begrenzung für smallCards-Bereich */
-    margin: 0 auto; /* HINZUGEFÜGT: Zentrierung */
+    max-width: 70%px; 
+    margin: 0 auto; 
 }
 
 .modelContent {
     background-color: aqua;
-    width: 40%;
-    height: 80vh;
-    max-height: 90vh; /* HINZUGEFÜGT: maximale Höhe begrenzen */
+    width: 800px;
+    max-width: 40%;
+    height: 800px;
+    max-height: 90vh; 
     position: fixed;
-    top: 10%;
-    left: 30%;
+    top: calc(var(--header-height) + var(--modal-offset));
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 9;
     border-radius: 15px;
     padding: 20px;
     overflow-y: auto;
-    display: flex; /* HINZUGEFÜGT: Flexbox für dynamische Größe */
-    flex-direction: column; /* HINZUGEFÜGT: Spalten-Layout */
+    display: flex; 
+    flex-direction: column;
 }
 
 #model {
@@ -270,14 +275,13 @@ body {
     display: none;
 }
 
-/* Modal und Pokemon Header Styles */
 .pokemon-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: 20px;
-    flex-shrink: 0; /* HINZUGEFÜGT: Header soll nicht schrumpfen */
+    flex-shrink: 0; 
 }
 
 .pokemon-header h2 {
@@ -313,6 +317,11 @@ body {
     margin: 16px;
 }
 
+.btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none
+}
 .nav-btn:hover {
     background: linear-gradient(135deg, #2563eb, #1e40af);
     transform: translateY(-2px);
@@ -329,7 +338,7 @@ body {
     justify-content: center;
     gap: 10px;
     margin: 10px 0;
-    flex-shrink: 0; /* HINZUGEFÜGT: Bilder sollen nicht schrumpfen */
+    flex-shrink: 0; 
 }
 
 .pokemon-images img {
@@ -340,8 +349,8 @@ body {
 }
 
 .pokemon-info {
-    flex: 1; /* GEÄNDERT: von 'max-height: 400px' auf 'flex: 1' für dynamische Größe */
-    overflow-y: auto; /* Scroll nur wenn nötig */
+    max-height: 70%;
+    overflow-y: auto; 
 }
 
 .basic-info {
@@ -351,7 +360,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* Badge Styles */
 .type-badge, .ability-badge, .move-badge {
     display: inline-block;
     padding: 4px 8px;
@@ -374,12 +382,11 @@ body {
     background-color: #74b9ff;
 }
 
-/* Tab Navigation Styles */
 .tab-navigation {
     display: flex;
     margin: 20px 0 10px 0;
     border-bottom: 2px solid #ddd;
-    flex-shrink: 0; /* HINZUGEFÜGT: Tab-Navigation soll nicht schrumpfen */
+    flex-shrink: 0; 
 }
 
 .tab-btn {
@@ -406,10 +413,9 @@ body {
     background-color: rgba(78, 205, 196, 0.1);
 }
 
-/* Tab Content Styles */
 .tab-content {
-    flex: 1; /* GEÄNDERT: von 'min-height: 200px' auf 'flex: 1' für dynamische Größe */
-    overflow-y: auto; /* HINZUGEFÜGT: Scroll nur wenn nötig */
+    flex: 1; 
+    overflow-y: auto; 
 }
 
 .tab-pane {
@@ -426,7 +432,6 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Stats Grid */
 .stats-grid {
     margin: 10px 0;
     display: grid;
@@ -535,7 +540,6 @@ body {
     transform: scale(1.1);
 }
 
-/* Loading Spinner Styles */
 #loadingSpinner {
     display: flex;
     flex-direction: column;
@@ -608,8 +612,16 @@ body {
     50% { opacity: 0.6; }
 }
 
-/* Responsive Design - ERWEITERT */
 @media (max-width: 768px) {
+    :root {
+        --header-height: 140px;
+        --modal-offset: 20px;
+    }
+
+    body {
+        padding-top: var(--header-height);
+    }
+
     .header-content {
         flex-direction: column;
         gap: 15px;
@@ -626,15 +638,11 @@ body {
     }
 
     .modelContent {
-        width: 90%;
-        left: 5%;
-        height: 80vh; /* Reduzierte Höhe für mehr Abstand */
+        width: 95%;
+        max-width: 90vw;        
+        top: calc(var(--header-height) + var(--modal-offset));
+        height: 800px; 
         max-height: 80vh;
-        top: 15%; /* Mehr Abstand vom Header */
-    }
-
-    body {
-        padding-top: 140px;
     }
 
     .pokeball {
@@ -652,62 +660,64 @@ body {
         height: 6px;
     }
 
-    /* FIX FÜR NAVIGATION BUTTONS */
     .pokemon-header {
-        flex-wrap: nowrap; /* Verhindert das Umbrechen der Buttons */
-        gap: 10px; /* Kleinerer Abstand zwischen Elementen */
+        flex-wrap: nowrap; 
+        gap: 10px; 
     }
 
     .pokemon-header h2 {
-        font-size: 18px; /* Kleinere Schrift für mehr Platz */
-        margin: 0 5px; /* Kleinere Margins */
+        font-size: 18px; 
+        margin: 0 5px; 
     }
 
     .nav-btn {
-        padding: 8px 12px; /* Kleinere Buttons */
-        font-size: 12px; /* Kleinere Schrift */
-        min-width: 60px; /* Kleinere Mindestbreite */
+        padding: 8px 12px; 
+        font-size: 12px; 
+        min-width: 60px; 
     }
 
     .prev-btn {
-        margin-right: 5px; /* Kleinerer Margin */
+        margin-right: 5px; 
     }
 
     .next-btn {
-        margin: 5px; /* Kleinerer Margin */
+        margin: 5px; 
     }
 }
 
-/* ZUSÄTZLICHER BREAKPOINT FÜR SEHR KLEINE BILDSCHIRME */
 @media (max-width: 480px) {
+    :root {
+        --header-height: 140px;
+        --modal-offset: 15px;
+    }
+
     .modelContent {
         width: 95%;
-        left: 2.5%;
-        height: 75vh; /* Noch kleinere Höhe */
+        max-width: 90vw;
+        top: calc(var(--header-height) + var(--modal-offset));
+        height: 800px; 
         max-height: 75vh;
-        top: 20%; /* Noch mehr Abstand vom Header */
     }
 
     .pokemon-header {
-        flex-direction: column; /* Stapelt die Elemente vertikal */
+        flex-direction: column; 
         align-items: center;
         gap: 10px;
-        margin-bottom: 15px; /* Mehr Abstand nach unten */
+        margin-bottom: 15px; 
     }
 
     .pokemon-header h2 {
-        order: 1; /* Titel kommt zuerst */
+        order: 1; 
         margin-bottom: 10px;
     }
 
     .nav-btn {
-        order: 2; /* Buttons kommen danach */
+        order: 2; 
         padding: 10px 15px;
         font-size: 14px;
         min-width: 80px;
     }
 
-    /* Container für die Buttons */
     .pokemon-header::after {
         content: '';
         display: flex;
@@ -717,6 +727,6 @@ body {
 
     .prev-btn,
     .next-btn {
-        margin: 0; /* Entfernt die individuellen Margins */
+        margin: 0; 
     }
 }
