@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="google">login with google</button>
+    <button id="facebook">login with facebook</button>
+    input type="text" Id="phone" placeholder="Enter your phone number" />
+    <button id="phone-login">Login with phone</button>
+    <div id="recaptcha-container"></div>
+    <input type="text" name="" id="otp" placeholder="Enter OTP" />
+    <button id="otp-login">Verify OTP</button>
+    <h3 id="user-info"></h3>
+  </body>
+  <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+            import {
+              getAuth,
+              signInWithPopup,
+              GoogleAuthProvider,
+              FacebookAuthProvider,
+              RecaptchaVerifier
+            }
+            from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+            const firebaseConfig = {
+              apiKey: "AIzaSyB5J8OVxFRBU6njw8vhUQPZv2Tl_hYpA_g",
+              authDomain: "form-b6850.firebaseapp.com",
+              projectId: "form-b6850",
+              storageBucket: "form-b6850.firebasestorage.app",
+              messagingSenderId: "732747706558",
+              appId: "1:732747706558:web:770600e45448ff47b7eeef",
+              measurementId: "G-0944GTTWGJ",
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const provider = new GoogleAuthProvider();
+          // sign in with google
+            // The sign-in button
+            document.getElementById("google").addEventListener("click", () => {
+              signInWithPopup(auth, provider)
+                .then((result) => {
+                  // This gives you a Google Access Token. You can use it to access the Google API.
+                  const credential = GoogleAuthProvider.credentialFromResult(result);
+                  const token = credential.accessToken;
+                  // The signed-in user info.
+                  const user = result.user;
+                  // IdP data available using getAdditionalUserInfo(result)
+                  // ...
+                })
+                .catch((error) => {
+                  // Handle Errors here.
+                  const errorCode = error.code;
+                  const errorMessage = error.message;
+                  // The email of the user's account used.
+                  const email = error.customData.email;
+                  // The AuthCredential type that was used.
+                  const credential = GoogleAuthProvider.credentialFromError(error);
+                  // ...
+                });
+            }); // Close the event listener callback
+
+
+        // Sign in with facebook
+
+            document.getElementById("facebook").addEventListener("click", function ()  {
+              const facebookProvider = new FacebookAuthProvider();
+              signInWithPopup(auth, provider)
+          .then((result) => {
+            // The signed-in user info.
+            const user = result.user;
+
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            const credential = FacebookAuthProvider.credentialFromResult(result);
+            const accessToken = credential.accessToken;
+
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = FacebookAuthProvider.credentialFromError(error);
+
+            // ...
+          });
+
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      'size': 'normal',
+      'callback': (response) => {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        // ...
+      },
+      'expired-callback': () => {
+        // Response expired. Ask user to solve reCAPTCHA again.
+        // ...
+      }
+    });
+  })
+    document.getElementById("phone-login").addEventListener("click", function () {
+        const phoneNumber = document.getElementById("phone").value;
+
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          // SMS sent. Prompt user to type the code from the message, then sign the
+          // user in with confirmationResult.confirm(code).
+          window.confirmationResult = confirmationResult;
+          // ...
+        }).catch((error) => {
+          // Error; SMS not sent
+          // ...
+        });
+    })
+  </script>
+</html>

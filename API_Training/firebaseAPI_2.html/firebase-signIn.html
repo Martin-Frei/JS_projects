@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .form{
+        border: 2px solid red;
+        padding: 20px;
+        width: 500px;
+    }
+
+    .mainBox{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+</style>
+<body>
+
+
+
+ <div class="mainBox">
+
+    <div class="form">
+           <h3>Sign Up</h3>
+           <input type="Email" placeholder="Email" id="signup-email">
+           <input type="password" placeholder="Password" id="signup-password">
+           <button id="signup-btn">Sign Up</button>
+    </div>
+
+
+        <div class="form">
+           <h3>Sign In</h3>
+           <input type="Email" placeholder="Email" id="sigin-email">
+           <input type="password" placeholder="Password" id="signin-password">
+           <button id="signin-btn">Sign in</button>
+    </div>
+
+    <button id="LogOut">LogOut</button>
+    <button id="link">SEND VARIFICATION LINK</button>
+
+
+ </div>   
+<div id="showMassage"></div>
+
+
+
+ <script type="module" src="firebase-signIn.js"></script>
+ 
+    
+</body>
+</html>

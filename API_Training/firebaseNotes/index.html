@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>  
+    <h1>Welcome to Firebase Notes</h1>
+
+    <div class="auth-section">
+        <input type="text" id="email" placeholder="Enter your email here">
+        <input type="text" id="password" placeholder="Enter your password here">
+        <button id="login" onclick="login() ">Login</button>
+        <button id="register" onclick="register()">Register</button>
+        <button id="logout" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="notes-section" id="notesSection" style="display: none;">
+        <h2>Welcome, <span id="userEmail"></span></h2>
+    <input type="text" id="addNotes" placeholder="Enter your note here">
+        <button id="addNote" onclick="addNote()">Add Note</button>
+
+        <ul id="notesList"></ul>
+    </div>
+
+</body>
+
+<script type="module"  src="app.js"></script>
+</html>

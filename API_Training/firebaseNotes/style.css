@@ -1,0 +1,50 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+h1{
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+}
+.auth-section, .notes-section {
+    padding: 20px;
+    background: #fff;
+    width: 400px;
+    margin: 10px auto;
+    border-bottom: 1px solid #eee;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background: #5cb85c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #4cae4c;
+}
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+

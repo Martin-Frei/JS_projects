@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .dashboard {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .role-badge {
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <div>
+                <h1>User Dashboard</h1>
+                <p>Welcome, <span id="userEmail">loading...</span></p>
+                <span class="role-badge">USER</span>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>📊 View Data</h3>
+                <p>Browse and view available data and reports.</p>
+                <button onclick="alert('View Data feature')">Open</button>
+            </div>
+            
+            <div class="feature-card">
+                <h3>👤 Profile</h3>
+                <p>View and update your profile information.</p>
+                <button onclick="alert('Profile feature')">Open</button>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📝 Submit Requests</h3>
+                <p>Submit requests for data access or support.</p>
+                <button onclick="alert('Submit Request feature')">Open</button>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📈 Reports</h3>
+                <p>View your personal reports and statistics.</p>
+                <button onclick="alert('Reports feature')">Open</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAm7ByR4lvqEVIu1jU-ZgD-y4o7R9QT4Pc",
+            authDomain: "fir-nida.firebaseapp.com",
+            projectId: "fir-nida",
+            storageBucket: "fir-nida.firebasestorage.app",
+            messagingSenderId: "36021624876",
+            appId: "1:36021624876:web:2d25b329eaf7d6d4b43189",
+            measurementId: "G-00L4RD7K25",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        // Check auth and role
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                document.getElementById('userEmail').textContent = user.email;
+                
+                // Check if user has correct role
+                const userRef = ref(database, 'users/' + user.uid);
+                const snapshot = await get(userRef);
+                
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    if (userData.role !== 'user') {
+                        // User has wrong role, redirect to correct page
+                        switch(userData.role) {
+                            case 'admin':
+                                window.location.href = 'admin.html';
+                                break;
+                            case 'editor':
+                                window.location.href = 'editor.html';
+                                break;
+                        }
+                    }
+                }
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        window.logout = function() {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        };
+    </script>
+</body>
+</html>

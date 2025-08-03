@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Assignment Pending</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+        .pending-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 100px;
+        }
+        .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        .title {
+            color: #ffc107;
+            margin-bottom: 20px;
+        }
+        .refresh-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .refresh-btn:hover {
+            background: #0056b3;
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        .status-info {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="pending-container">
+        <div class="icon">⏳</div>
+        <h1 class="title">Role Assignment Pending</h1>
+        
+        <div class="status-info">
+            <strong>Account Status:</strong> Waiting for role assignment<br>
+            <strong>Email:</strong> <span id="userEmail">loading...</span><br>
+            <strong>Registered:</strong> <span id="createdAt">loading...</span>
+        </div>
+        
+        <p>Your account has been created successfully, but you're waiting for an administrator to assign your role.</p>
+        
+        <p>Please contact your system administrator or check back later.</p>
+        
+        <button class="refresh-btn" onclick="checkRoleStatus()">Check Status</button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        
+        <div id="statusMessage" style="margin-top: 20px;"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+        import { getDatabase, ref, get, onValue } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAm7ByR4lvqEVIu1jU-ZgD-y4o7R9QT4Pc",
+            authDomain: "fir-nida.firebaseapp.com",
+            projectId: "fir-nida",
+            storageBucket: "fir-nida.firebasestorage.app",
+            messagingSenderId: "36021624876",
+            appId: "1:36021624876:web:2d25b329eaf7d6d4b43189",
+            measurementId: "G-00L4RD7K25",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        let currentUserId = null;
+
+        // Check auth state
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserId = user.uid;
+                document.getElementById('userEmail').textContent = user.email;
+                
+                // Load user data
+                await loadUserData();
+                
+                // Listen for role changes in real-time
+                const userRef = ref(database, 'users/' + user.uid);
+                onValue(userRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        checkAndRedirect(userData);
+                    }
+                });
+                
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        async function loadUserData() {
+            try {
+                const userRef = ref(database, 'users/' + currentUserId);
+                const snapshot = await get(userRef);
+                
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    document.getElementById('createdAt').textContent = 
+                        new Date(userData.createdAt).toLocaleString();
+                    
+                    // Check if role has been assigned
+                    checkAndRedirect(userData);
+                }
+            } catch (error) {
+                console.error("Error loading user data:", error);
+            }
+        }
+
+        function checkAndRedirect(userData) {
+            if (userData.status !== 'pending' && userData.role !== 'user') {
+                // Role has been assigned, redirect
+                switch(userData.role) {
+                    case 'admin':
+                        window.location.href = 'admin.html';
+                        break;
+                    case 'editor':
+                        window.location.href = 'editor.html';
+                        break;
+                    case 'user':
+                    default:
+                        window.location.href = 'user.html';
+                        break;
+                }
+            }
+        }
+
+        window.checkRoleStatus = async function() {
+            const statusMsg = document.getElementById('statusMessage');
+            statusMsg.innerHTML = '<em>Checking status...</em>';
+            
+            try {
+                const userRef = ref(database, 'users/' + currentUserId);
+                const snapshot = await get(userRef);
+                
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    
+                    if (userData.status === 'pending') {
+                        statusMsg.innerHTML = '<span style="color: #ffc107;">Still pending role assignment</span>';
+                    } else {
+                        statusMsg.innerHTML = '<span style="color: #28a745;">Role assigned! Redirecting...</span>';
+                        setTimeout(() => checkAndRedirect(userData), 1000);
+                    }
+                }
+            } catch (error) {
+                statusMsg.innerHTML = '<span style="color: #dc3545;">Error checking status</span>';
+            }
+        };
+
+        window.logout = function() {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        };
+    </script>
+</body>
+</html>

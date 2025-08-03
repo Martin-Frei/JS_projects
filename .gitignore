@@ -1,5 +1,8 @@
 API_Training/weather/api-weather-key.js
 API_Training/firebaseAPI/apiKey.js
+API_Training/firebaseNotes/apikey.js
+API_Training/firebasestarterAPI/
+
 
 
 
@@ -9,5 +12,5 @@ TrainingsTimer/Theraband.html
 
 Django_Code_Generator/
 
-weather/script1.js
-weather/style1.css
+API_Training/weather/script1.js
+API_Training/weather/style1.css

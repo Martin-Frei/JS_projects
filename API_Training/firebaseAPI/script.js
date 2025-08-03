@@ -53,6 +53,9 @@ async function deleteData(path = "") {
 
 // NEUE FUNKTION: Löscht eine Notiz und aktualisiert die Anzeige
 async function deleteNote(path) {
+    if (!confirm("Notiz wirklich löschen?")) {
+    return; // Abbruch wenn Nutzer "Abbrechen" klickt
+    }
     try {
         // Löschen der Notiz
         await deleteData(path);

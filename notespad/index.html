@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadShoppingList()">
+
+    <header class="header">
+        <h1>Meine Einkaufsliste</h1>
+    </header>
+
+    <div class="main d-none" id="main">
+
+        <div class="input-section">
+            <input type="text" id="getName" placeholder="Article Name">
+            <input type="text" id="getStore"  placeholder="Store Name">
+            <input type="date" id="getDate" onkeydown="checkEnter(event)">
+            <button onclick="addItem()">add</button>
+        </div>
+
+        <div class="output-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="column-article">Article Name</th>
+                        <th class="column-store">Store Name</th>
+                        <th class="column-date">Valid till</th>
+                        <th class="column-delete">Delete?</th>
+                    </tr>
+                </thead>
+                <tbody id="outputSection">
+                    <!-- Ab hier Daten aus JS -->
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+    <div class="output-section" id="outputArchiev">
+        <table>
+            <thead>
+                <tr>
+                    <th class="column-article">Article Name</th>
+                    <th class="column-store">Store Name</th>
+                    <th class="column-date">Valid till</th>
+                    <th class="column-delete">Delete?</th>
+                </tr>
+            </thead>
+            <tbody id="archiev">
+                <!-- Ab hier Daten aus JS -->
+            </tbody>
+        </table>
+
+    </div>
+    
+</body>
+
+<script src="./script.js"></script>
+</html>

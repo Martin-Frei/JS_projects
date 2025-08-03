@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .dashboard {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .role-badge {
+            background: #dc3545;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
+        }
+        .feature-card h3 {
+            color: #dc3545;
+        }
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        .user-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .role-select {
+            padding: 5px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p>Welcome, <span id="userEmail">loading...</span></p>
+                <span class="role-badge">ADMIN</span>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>👥 User Management</h3>
+                <p>Manage all users and their roles in the system.</p>
+                <button onclick="loadUsers()">Manage Users</button>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🔧 System Settings</h3>
+                <p>Configure system-wide settings and preferences.</p>
+                <button onclick="alert('System Settings feature')">Configure</button>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📊 Analytics</h3>
+                <p>View detailed analytics and system reports.</p>
+                <button onclick="alert('Analytics feature')">View Analytics</button>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🗃️ Database Management</h3>
+                <p>Manage database, backups and data integrity.</p>
+                <button onclick="alert('Database Management feature')">Manage DB</button>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🔐 Security</h3>
+                <p>Monitor security logs and access controls.</p>
+                <button onclick="alert('Security feature')">Security Panel</button>
+            </div>
+            
+            <div class="feature-card">
+                <h3>📝 Content Management</h3>
+                <p>Manage all content and editorial workflows.</p>
+                <button onclick="alert('Content Management feature')">Manage Content</button>
+            </div>
+        </div>
+
+        <div class="user-list" id="userListContainer" style="display: none;">
+            <h3>User Management</h3>
+            <div id="userList">Loading users...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+        import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAm7ByR4lvqEVIu1jU-ZgD-y4o7R9QT4Pc",
+            authDomain: "fir-nida.firebaseapp.com",
+            projectId: "fir-nida",
+            storageBucket: "fir-nida.firebasestorage.app",
+            messagingSenderId: "36021624876",
+            appId: "1:36021624876:web:2d25b329eaf7d6d4b43189",
+            measurementId: "G-00L4RD7K25",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        // Check auth and role
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                document.getElementById('userEmail').textContent = user.email;
+                
+                // Check if user has admin role
+                const userRef = ref(database, 'users/' + user.uid);
+                const snapshot = await get(userRef);
+                
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    if (userData.role !== 'admin') {
+                        alert('Access denied. Admin role required.');
+                        window.location.href = 'index.html';
+                    }
+                } else {
+                    window.location.href = 'index.html';
+                }
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        window.logout = function() {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        };
+
+        window.loadUsers = async function() {
+            const container = document.getElementById('userListContainer');
+            const userList = document.getElementById('userList');
+            
+            container.style.display = 'block';
+            userList.innerHTML = 'Loading users...';
+            
+            try {
+                const usersRef = ref(database, 'users');
+                const snapshot = await get(usersRef);
+                
+                if (snapshot.exists()) {
+                    const users = snapshot.val();
+                    let html = '';
+                    
+                    Object.keys(users).forEach(userId => {
+                        const user = users[userId];
+                        html += `
+                            <div class="user-item">
+                                <div>
+                                    <strong>${user.email}</strong><br>
+                                    <small>Created: ${new Date(user.createdAt).toLocaleString()}</small>
+                                </div>
+                                <div>
+                                    <select class="role-select" onchange="changeUserRole('${userId}', this.value)">
+                                        <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
+                                        <option value="editor" ${user.role === 'editor' ? 'selected' : ''}>Editor</option>
+                                        <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    userList.innerHTML = html;
+                } else {
+                    userList.innerHTML = 'No users found.';
+                }
+            } catch (error) {
+                userList.innerHTML = 'Error loading users: ' + error.message;
+            }
+        };
+
+        window.changeUserRole = async function(userId, newRole) {
+            try {
+                // Update role and status
+                await set(ref(database, 'users/' + userId + '/role'), newRole);
+                await set(ref(database, 'users/' + userId + '/status'), 'active');
+                await set(ref(database, 'users/' + userId + '/roleAssignedAt'), new Date().toISOString());
+                
+                alert('User role updated successfully!');
+                
+                // Reload user list to show changes
+                loadUsers();
+            } catch (error) {
+                alert('Error updating role: ' + error.message);
+            }
+        };
+    </script>
+</body>
+</html>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad 2.</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body onload="renderShowList()">
+    <div class="body">
+    <header class="header">
+        <h1>Meine Einkaufsliste v2</h1>
+        <div class="nav">
+            <button class="button" onclick="renderShowList()">Liste</button>
+            <button class="button" onclick="renderShowArchiev()">Archiev</button>
+        </div>
+    </header>
+    <main class="main ">
+        <div id="main">
+            <div class="input-section" id="inputSection">
+
+                <input type="text" class="input" id="inputName" placeholder="Article">
+
+                <input type="text" class="input" id="inputStore" placeholder="Store" onkeydown="checkEnter(event)">
+                
+                <button class="button" onclick="addItem()">Add to List</button>
+            </div>
+
+            <div class="output-section" id="outputSection">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Artikel</th>
+                            <th>Geschäft</th>                        
+                            <th>Aktion</th>
+                        </tr>
+                    </thead> 
+
+                    <tbody class="table-body" id="tableBodyOutput">
+                    </tbody> 
+
+                </table>
+            </div>
+        </div>
+        <div class="main d-none" id="archievSection">
+            <table class="table archiev-section">
+                <thead>
+                    <tr>
+                        <th>Artikel</th>
+                        <th>Geschäft</th>
+                        <th>Aktion</th>
+                    </tr>
+                </thead> 
+                <tbody class="table-body" id="tableBodyArchiev">
+                </tbody>            
+            </table>
+
+        </div>
+    </main>
+
+    <footer>
+
+    </footer>
+
+    </div>    
+</body>
+<script src="script2.js" defer></script>
+</html>
